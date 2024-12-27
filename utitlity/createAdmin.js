@@ -16,7 +16,8 @@ const createAdmin =async() =>{
         email:'santhiyakn01@gmail.com',
         password:'Admin2002',
         role:'admin',
-        isVerified:true
+        isVerified:true,
+        photo:"https://www.iconpacks.net/icons/1/free-user-icon-295-thumb.png"
         
     });
 
