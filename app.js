@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import {connectDb} from './models/db.js';
 connectDb();
+const port = process.env.PORT ||8000;
 
 import  serviceRoutes from './routes/serviceRoutes.js';
 import  serviceProviderRoutes from './routes/serviceProviderRoutes.js';
@@ -30,6 +31,6 @@ app.use('/api',feedBackRoutes);
 
 
 
-app.listen(process.env.PORT);
+app.listen(port);
 
 console.log('hello');
