@@ -2,7 +2,6 @@ import express, { json, urlencoded } from 'express';
 const app = express();
 import dotenv from 'dotenv';
 dotenv.config();
-const port = process.env.PORT || 8000;
 import {connectDb} from './models/db.js';
 connectDb();
 
@@ -31,6 +30,6 @@ app.use('/api',feedBackRoutes);
 
 
 
-app.listen(port);
+app.listen(process.env.PORT);
 
 console.log('hello');
