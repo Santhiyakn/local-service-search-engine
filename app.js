@@ -1,7 +1,10 @@
 import express, { json, urlencoded } from 'express';
 const app = express();
+import dotenv from 'dotenv';
+dotenv.config();
 import {connectDb} from './models/db.js';
 connectDb();
+
 import  serviceRoutes from './routes/serviceRoutes.js';
 import  serviceProviderRoutes from './routes/serviceProviderRoutes.js';
 import  userRoutes from './routes/userRoutes.js';
@@ -27,6 +30,6 @@ app.use('/api',feedBackRoutes);
 
 
 
-app.listen(8000);
+app.listen(process.env.PORT);
 
 console.log('hello');
