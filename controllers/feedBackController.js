@@ -243,8 +243,7 @@ const getServiceProviderFeedBack = async (req, res) => {
         {
             return res.status(400).json({
                 status: 'Error',
-                message: 'serviceProvider id Invlid',
-                data:[]
+                message: 'serviceProvider id Invlid'
             });
         }
         const serviceProviderFeedBack = await FeedBackModel.find({ serviceProviderId: serviceProviderId });
