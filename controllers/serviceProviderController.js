@@ -8,7 +8,7 @@ const createServiceProvider = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Please provide a valide information'
+                    message: 'Please provide a valide information',data:[]
                 });
         }
 
@@ -20,6 +20,7 @@ const createServiceProvider = async (req, res) => {
                 .json({
                     status: 'Error',
                     message: 'Please provide a valide service type id information',
+                    data:[]
                 });
         }
 
@@ -32,7 +33,8 @@ const createServiceProvider = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Service provider already exits with the email id'
+                    message: 'Service provider already exits with the email id',
+                    data:[]
                 });
 
         }
@@ -40,7 +42,8 @@ const createServiceProvider = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Service provider already exits with the phone number'
+                    message: 'Service provider already exits with the phone number',
+                    data:[]
                 });
         }
         
@@ -68,7 +71,7 @@ const createServiceProvider = async (req, res) => {
             .json({
                 status: 'success',
                 message: 'Data retrieved',
-                data: provider
+                data: [provider]
             });
 
 
@@ -76,7 +79,7 @@ const createServiceProvider = async (req, res) => {
     }
     catch (error) {
         return res.status(500)
-            .json({ status: 'Error', message: error.message });
+            .json({ status: 'Error', message: error.message,data:[] });
     }
 
 
@@ -99,12 +102,14 @@ const deleteServiceProvider = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Service Provider not found'
+                    message: 'Service Provider not found',
+                    data:[]
                 });
         }
         return res.status(201).json({
             status: 'success',
-            message: 'Deleted successfully'
+            message: 'Deleted successfully',
+            data:[]
         });
 
     }
@@ -112,7 +117,8 @@ const deleteServiceProvider = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
@@ -126,7 +132,8 @@ const updateServiceProvider = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Id is required to update'
+                    message: 'Id is required to update',
+                    data:[]
                 });
         }
         const updatedserviceProvider = req.body;
@@ -139,6 +146,7 @@ const updateServiceProvider = async (req, res) => {
                     .json({
                         status: 'Error',
                         message: 'Please provide a valide service type id information',
+                        data:[]
                     });
             }
         }
@@ -151,7 +159,8 @@ const updateServiceProvider = async (req, res) => {
                 return res.status(400)
                     .json({
                         status: 'Error',
-                        message: 'Service provider already exits with the email id'
+                        message: 'Service provider already exits with the email id',
+                        data:[]
                     });
 
             }
@@ -165,7 +174,8 @@ const updateServiceProvider = async (req, res) => {
                 return res.status(400)
                     .json({
                         status: 'Error',
-                        message: 'Service provider already exits with the phone number'
+                        message: 'Service provider already exits with the phone number',
+                        data:[]
                     });
             }
         }
@@ -206,14 +216,15 @@ const updateServiceProvider = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'No such Service Provider available ... Please check the id'
+                    message: 'No such Service Provider available ... Please check the id',
+                    data:[]
                 });
         }
 
         return res.status(201).json({
             status: 'success',
             message: 'Updated successfully',
-            data: updatedData
+            data: [updatedData]
         });
 
 
@@ -222,7 +233,8 @@ const updateServiceProvider = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 }
@@ -237,14 +249,15 @@ const getServiceProvider = async (req, res) => {
                 return res.status(400)
                     .json({
                         status: 'Error',
-                        message: 'Invalid serviceProvider Id'
+                        message: 'Invalid serviceProvider Id',
+                        data:[]
                     });
             }
             return res.status(201)
                 .json({
                     status: 'success',
                     message: 'Updated successfully',
-                    data: serviceProvider
+                    data: [serviceProvider]
                 });
         }
         else {
@@ -254,7 +267,9 @@ const getServiceProvider = async (req, res) => {
 
             if (pageNumber < 1 || pageSize < 1) {
                 return res.status(400)
-                    .json({ message: 'Page number and page size must be positive integers' });
+                    .json({status: 'Error',
+                         message: 'Page number and page size must be positive integers',
+                         data:[]});
             }
 
             const limit = pageSize;
@@ -276,7 +291,8 @@ const getServiceProvider = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 

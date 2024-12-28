@@ -21,7 +21,8 @@ const signUp = async (req, res) => {
         if (isUserExists) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'User already exists'
+                message: 'User already exists',
+                data:[]
             });
         }
 
@@ -49,18 +50,19 @@ const signUp = async (req, res) => {
         );
         return res.status(201).json({
             status: 'success',
-            message: 'Verification mail is send to your email,Please enter the otp'
+            message: 'Verification mail is send to your email,Please enter the otp',
+            data:[newUser]
         })
     }
     catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400)
-                .json({ status: 'Error', message: error.message });
+                .json({ status: 'Error', message: error.message,data:[] });
         }
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,data:[]
             });
     }
 }
@@ -74,14 +76,16 @@ const verifyOtp = async (req, res) => {
         if (!VierifyUser) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'User does not  exists'
+                message: 'User does not  exists',
+                data:[]
             });
         }
 
         if (VierifyUser.otpExpires < new Date()) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'Otp expired'
+                message: 'Otp expired',
+                data:[]
             });
         }
 
@@ -91,7 +95,8 @@ const verifyOtp = async (req, res) => {
         if (!isVaildOpt) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'Provide valid otp'
+                message: 'Provide valid otp',
+                data:[]
             });
         }
         VierifyUser.isVerified = true;
@@ -103,13 +108,15 @@ const verifyOtp = async (req, res) => {
         return res.status(201).json({
             status: 'Error',
             messgae: "Email verfied successfully",
+            data:[]
         });
     }
     catch (error) {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
@@ -127,21 +134,24 @@ const logIn = async (req, res) => {
         if (!userLogin) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'User does not  exists'
+                message: 'User does not  exists',
+                data:[]
             });
         }
         const user = await UserModel.findById(userLogin.id);
         if (!user.isVerified) {
             return res.status(403).json({
                 status: 'Error',
-                message: 'Not a verified user'
+                message: 'Not a verified user',
+                data:[]
             })
         }
         const verfiyPassword = await compare(password, userLogin.password);
         if (!verfiyPassword) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'Incorrect password'
+                message: 'Incorrect password',
+                data:[]
             });
         }
         const token = sign({ id: userLogin.id }, process.env.JWT_SECRET, { expiresIn: '24hr' });
@@ -149,7 +159,7 @@ const logIn = async (req, res) => {
             id: userLogin.id,
             status: "success",
             message: "Login successful",
-            data: userLogin,
+            data: [userLogin],
             token,
         });
     }
@@ -157,7 +167,8 @@ const logIn = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
@@ -172,7 +183,8 @@ const authenticate = async(req, res, next) => {
         if (!token) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'Access denied'
+                message: 'Access denied',
+                data:[]
             });
         }
 
@@ -180,7 +192,8 @@ const authenticate = async(req, res, next) => {
         if (tokenblacklist.has(actualToken)) {
             return res.status(402).json({
                 status: 'Error',
-                message: 'Token  invalid. Please log in again.'
+                message: 'Token  invalid. Please log in again.',
+                data:[]
             });
         }
         const verifyToken = verify(actualToken, process.env.JWT_SECRET);
@@ -207,7 +220,8 @@ const adminAuthenticate = async (req, res, next) => {
         if (!token) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'Access denied'
+                message: 'Access denied',
+                data:[]
             });
         }
 
@@ -215,7 +229,8 @@ const adminAuthenticate = async (req, res, next) => {
         if (tokenblacklist.has(actualToken)) {
             return res.status(402).json({
                 status: 'Error',
-                message: 'Token  invalidated. Please log in again.'
+                message: 'Token  invalidated. Please log in again.',
+                data:[]
             });
         }
         const verifyToken = verify(actualToken, process.env.JWT_SECRET);
@@ -223,7 +238,8 @@ const adminAuthenticate = async (req, res, next) => {
         if (admin[0].id != verifyToken.id  ) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'Invalid token (not admin token)'
+                message: 'Invalid token (not admin token)',
+                data:[]
             })
         }
 
@@ -235,7 +251,8 @@ const adminAuthenticate = async (req, res, next) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
@@ -246,7 +263,8 @@ const updateUser = async (req, res) => {
     if (!req.query.id) {
         return res.status(400).json({
             status: 'Error',
-            message: 'Id not found'
+            message: 'Id not found',
+            data:[]
         });
     }
     try {
@@ -259,7 +277,8 @@ const updateUser = async (req, res) => {
         if (user === null) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'User not found - Invalid Id'
+                message: 'User not found - Invalid Id',
+                data:[]
             });
         }
 
@@ -272,7 +291,8 @@ const updateUser = async (req, res) => {
         if (sanitizedData.role) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'role cannot be updated'
+                message: 'role cannot be updated',
+                data:[]
             });
         }
 
@@ -280,7 +300,8 @@ const updateUser = async (req, res) => {
         if (sanitizedData.email) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'Email cannot be updated'
+                message: 'Email cannot be updated',
+                data:[]
             });
         }
 
@@ -289,7 +310,9 @@ const updateUser = async (req, res) => {
                 || sanitizedData.password.length < 8) {
                     return res.status(400).json({
                         status: 'Error',
-                        message: 'Password exceeds maximum allowed length of 15 characters or less than 8 characters'
+                        message: 'Password exceeds maximum allowed length of 15 characters or less than 8 characters',
+                        data:[]
+                        
                     });
                
             }
@@ -306,21 +329,23 @@ const updateUser = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'User not found'
+                    message: 'User not found',
+                    data:[]
                 });
         }
         return res.status(201)
             .json({
                 status: 'success',
                 message: 'User profile updated successfully',
-                data: updatedUser
+                data: [updatedUser]
             });
     }
     catch (error) {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
@@ -334,21 +359,24 @@ const logOut =async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'No token found'
+                    message: 'No token found',
+                    data:[]
                 });
         }
         const actualToken = token.split(' ')[1];
         tokenblacklist.add(actualToken);
         return res.status(201).json({
             status: 'success',
-            message: 'Logged out successfully'
+            message: 'Logged out successfully',
+            data:[]
         });
     }
     catch (error) {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 }
@@ -363,23 +391,24 @@ const AdminLogin = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Admin EmailId is invalid'
+                    message: 'Admin EmailId is invalid',
+                    data:[]
                 });
         }
         if (!verfiyPassword) {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Admin Password is invalid'
+                    message: 'Admin Password is invalid',
+                    data:[]
                 });
         }
         const token = sign({ id: admin.id }, process.env.JWT_SECRET, { expiresIn: '1hr' });
         await UserModel.findByIdAndUpdate(admin.id,{logIn:true}, { new: true, runValidators: true });
         return res.status(201).json({
-            id: admin.id,
             status: "success",
             message: "Admin Login successful",
-            token,
+            data:[token],
         });
     }
     catch (error) {
@@ -401,13 +430,14 @@ const getUser = async (req, res) => {
             if (userDetail == null) {
                 return res.status(400).json({
                     status: 'Error',
-                    message: 'User is not found '
+                    message: 'User is not found ',
+                    data:[]
                 })
             }
             return res.status(201).json({
                 status: "success",
                 message: "Data retrieved successfully",
-                data: userDetail,
+                data: [userDetail],
             });
         }
         const users = await UserModel.find({});
@@ -422,7 +452,8 @@ const getUser = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 }
@@ -434,7 +465,8 @@ const deleteUser = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'id is required to delete'
+                    message: 'id is required to delete',
+                    data:[]
                 });
         }
         const id = req.query.id;
@@ -443,13 +475,15 @@ const deleteUser = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Invalid user id'
+                    message: 'Invalid user id',
+                    data:[]
                 });
 
         }
         return res.status(201).json({
             status: 'success',
             message: 'Deleted successfully',
+            data:[]
         });
 
     }
@@ -457,7 +491,8 @@ const deleteUser = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 }

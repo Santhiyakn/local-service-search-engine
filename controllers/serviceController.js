@@ -8,12 +8,19 @@ const createService = async (req, res) => {
         const { name } = req.body;
         if (!name) {
             return res.status(400)
-                .json({ status: 'Error', message: 'Service name is required' });
+                .json({ 
+                    status: 'Error', 
+                    message: 'Service name is required',
+                    data:[]
+                 });
         }
         const isExists = await ServiceModel.find({ name: name });
         if (isExists.length > 0) {
             return res.status(400)
-                .json({ status: 'Error', message: 'Service already exist' });
+                .json({ 
+                    status: 'Error', 
+                    message: 'Service already exist',
+                    data:[] });
 
         }
         const service_type = new ServiceModel({
@@ -23,16 +30,20 @@ const createService = async (req, res) => {
         await service_type.save();
 
         return res.status(201)
-            .json({ status: 'success', message: 'Service  is created',data:service_type });
+            .json({ 
+                
+                status: 'success', 
+                message: 'Service  is created',
+                data:service_type });
 
     }
     catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400)
-                .json({ status: 'Error', message: error.message });
+                .json({ status: 'Error', message: error.message,data:[] });
         }
         return res.status(500)
-            .json({ status: 'Error', message: error.message });
+            .json({ status: 'Error', message: error.message,data:[] });
     }
 }
 
@@ -46,13 +57,13 @@ const getService = async (req, res) => {
             if(services===null)
             {
                 return res.status(400)
-                .json({ status: 'Error', message: 'Invalid Service Id' });
+                .json({ status: 'Error', message: 'Invalid Service Id',data:[] });
             }
             return res.status(200)
                 .json({
                     status: 'Success',
                     message: 'Data retrieved',
-                    data: services
+                    data: [services]
                 });
         }
         else {
@@ -62,7 +73,9 @@ const getService = async (req, res) => {
 
             if (pageNumber < 1 || pageSize < 1) {
                 return res.status(400)
-                .json({ status: 'Error', message: 'Page number and page size must be positive integers' });
+                .json({ status: 'Error',
+                     message: 'Page number and page size must be positive integers' ,
+                     data:[]});
             }
 
             const limit = pageSize;
@@ -81,7 +94,7 @@ const getService = async (req, res) => {
     }
     catch (error) {
         return res.status(500)
-        .json({ status: 'Error', message: error.message });
+        .json({ status: 'Error', message: error.message,data:[] });
    
     }
 }
@@ -94,20 +107,20 @@ const updateService = async (req, res) => {
         const id = req.query.id;
         if (!id) {
             return res.status(400)
-                .json({ status: 'Error',message: 'Service id is required' });
+                .json({ status: 'Error',message: 'Service id is required',data:[] });
         }
         const service_name = req.body.name;
         const isExists = await ServiceModel.find({ name: service_name });
         if (isExists.length > 0) {
             return res.status(400)
-                .json({status: 'Error', message: 'Service already exist'});
+                .json({status: 'Error', message: 'Service already exist',data:[]});
         }
 
         const updatedService = await ServiceModel.updateOne({ _id: id }, { name: service_name });
 
         if (updatedService.modifiedCount===0) {
             return res.status(400)
-                .json({ status: 'Error', message: 'Service not found' });
+                .json({ status: 'Error', message: 'Service not found' ,data:[]});
         }
 
         const service = await ServiceModel.find({ name: service_name }) ;
@@ -122,7 +135,7 @@ const updateService = async (req, res) => {
     }
     catch (error) {
         return res.status(500)
-        .json({ status: 'Error', message: error.message });
+        .json({ status: 'Error', message: error.message,data:[] });
     }
 
 
@@ -135,22 +148,22 @@ const deleteService = async (req, res) => {
         const id = req.query.id;
         if (!id) {
             return res.status(400)
-                .json({ status: 'Error', message:'Service id is required' });
+                .json({ status: 'Error', message:'Service id is required' ,data:[]});
         }
 
         const deletedService = await ServiceModel.findByIdAndDelete(id);
 
         if (deletedService == null) {
             return res.status(400)
-                .json({ status: 'Error', message:'Service not found' });
+                .json({ status: 'Error', message:'Service not found',data:[] });
         }
         return res.status(201)
-        .json({ status: 'success', message: 'Service type is deleted successfully' });
+        .json({ status: 'success', message: 'Service type is deleted successfully',data:[] });
 
     }
     catch (error) {
         return res.status(500)
-        .json({ status: 'Error', message: error.message });
+        .json({ status: 'Error', message: error.message,data:[] });
     }
 
 }

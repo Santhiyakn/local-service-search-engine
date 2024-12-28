@@ -10,7 +10,8 @@ const userEnquire = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Please provide the userId ,serviceProviderId  and question '
+                    message: 'Please provide the userId ,serviceProviderId  and question ',
+                    data:[]
                 });
         }
         if(enquireQuestion.length>100 || enquireQuestion.length<10)
@@ -18,7 +19,8 @@ const userEnquire = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Please provide the valid enquireQuestion '
+                    message: 'Please provide the valid enquireQuestion ',
+                    data:[]
                 });
         }
         const user = await UserModel.findById(userId);
@@ -26,7 +28,8 @@ const userEnquire = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Please provide the valid userId '
+                    message: 'Please provide the valid userId ',
+                    data:[]
                 });
 
         }
@@ -35,7 +38,8 @@ const userEnquire = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Please provide the valid serviceProvideId '
+                    message: 'Please provide the valid serviceProvideId ',
+                    data:[]
                 });
 
         }
@@ -57,7 +61,7 @@ const userEnquire = async (req, res) => {
         return res.status(201).json({
             status: 'Success',
             message: 'Enquire mail is send successfully',
-            data: enquires
+            data: [enquires],
         });
     }
     catch (error) {
@@ -65,7 +69,8 @@ const userEnquire = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
 
     }
@@ -81,7 +86,8 @@ const userFeedBack = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Please provide the userId ,serviceProviderId  and rating '
+                    message: 'Please provide the userId ,serviceProviderId  and rating ',
+                    data:[]
                 });
         }
 
@@ -89,7 +95,8 @@ const userFeedBack = async (req, res) => {
         if (!user || !user.enquries || user.enquries.length === 0) {
             return res.status(404).json({
                 status: 'Error',
-                message: 'User or enquiries not found'
+                message: 'User or enquiries not found',
+                data:[]
             });
         }
         const serviceProvider = await ServiceProviderModel.findById(serviceProviderId);
@@ -97,7 +104,8 @@ const userFeedBack = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'Please provide the valid serviceProvideId '
+                    message: 'Please provide the valid serviceProvideId ',
+                    data:[]
                 });
 
         }
@@ -113,6 +121,7 @@ const userFeedBack = async (req, res) => {
             return res.status(400).json({
                 status: 'Error',
                 message: 'No valid enquiry found to leave feedback for this service provider',
+                data:[]
             });
         }
         const Userfeedback = new FeedBackModel({
@@ -126,7 +135,7 @@ const userFeedBack = async (req, res) => {
         return res.status(201).json({
             status: 'success',
             message: 'Review is added',
-            data: Userfeedback
+            data: [Userfeedback]
         });
 
     }
@@ -134,7 +143,8 @@ const userFeedBack = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
@@ -146,7 +156,8 @@ const deleteFeedBack = async (req, res) => {
         if (!req.query.id) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'feedBack id is required'
+                message: 'feedBack id is required',
+                data:[]
             });
         }
         const id = req.query.id;
@@ -156,19 +167,22 @@ const deleteFeedBack = async (req, res) => {
             return res.status(400)
                 .json({
                     status: 'Error',
-                    message: 'FeedBack not found'
+                    message: 'FeedBack not found',
+                    data:[]
                 });
         }
         return res.status(201).json({
             status: 'success',
-            message: 'Feedback  is deleted'
+            message: 'Feedback  is deleted',
+            data:[]
         });
     }
     catch (error) {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
@@ -179,7 +193,8 @@ const getUserFeedBack = async (req, res) => {
         if (!req.query.id) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'user id is required'
+                message: 'user id is required',
+                data:[]
             });
         }
         const userId = req.query.id;
@@ -189,7 +204,8 @@ const getUserFeedBack = async (req, res) => {
             return res.status(400)
             .json({
                 status: 'Error',
-                message: 'Invalid userId'
+                message: 'Invalid userId',
+                data:[]
             });
         }
         const userFeedBack = await FeedBackModel.find({ userId: userId });
@@ -203,7 +219,8 @@ const getUserFeedBack = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
@@ -216,7 +233,8 @@ const getServiceProviderFeedBack = async (req, res) => {
         if (!req.query.id) {
             return res.status(400).json({
                 status: 'Error',
-                message: 'serviceProvider id is required'
+                message: 'serviceProvider id is required',
+                data:[]
             });
         }
         const serviceProviderId = req.query.id;
@@ -225,7 +243,8 @@ const getServiceProviderFeedBack = async (req, res) => {
         {
             return res.status(400).json({
                 status: 'Error',
-                message: 'serviceProvider id Invlid'
+                message: 'serviceProvider id Invlid',
+                data:[]
             });
         }
         const serviceProviderFeedBack = await FeedBackModel.find({ serviceProviderId: serviceProviderId });
@@ -239,7 +258,8 @@ const getServiceProviderFeedBack = async (req, res) => {
         return res.status(500)
             .json({
                 status: 'Error',
-                message: error.message
+                message: error.message,
+                data:[]
             });
     }
 
