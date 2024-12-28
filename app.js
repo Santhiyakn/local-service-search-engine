@@ -6,10 +6,14 @@ import {connectDb} from './models/db.js';
 connectDb();
 const port = process.env.PORT ||8000;
 
+import cors from 'cors';
+
 import  serviceRoutes from './routes/serviceRoutes.js';
 import  serviceProviderRoutes from './routes/serviceProviderRoutes.js';
 import  userRoutes from './routes/userRoutes.js';
 import feedBackRoutes from './routes/feedBackRoutes.js';
+
+app.use(cors());
 app.use(json());
 app.use(urlencoded({extended:true}));
 
@@ -19,7 +23,7 @@ app.get('/',(req,res)=>{
 });
 
 
-//services
+
 
 app.use('/api',serviceRoutes);
 

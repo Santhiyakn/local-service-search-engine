@@ -266,7 +266,7 @@ const getServiceProvider = async (req, res) => {
             return res.status(201)
                 .json({
                     status: 'success',
-                    message: 'Updated successfully',
+                    message: 'Data retrieved',
                     data: servicesProviders
                 });
         }
