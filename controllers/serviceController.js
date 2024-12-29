@@ -34,7 +34,7 @@ const createService = async (req, res) => {
                 
                 status: 'success', 
                 message: 'Service  is created',
-                data:service_type });
+                data:[service_type] });
 
     }
     catch (error) {
@@ -66,7 +66,7 @@ const getService = async (req, res) => {
                     data: [services]
                 });
         }
-        else {
+        if(!id) {
             const pageNumber = req.body.pageNumber;
             const pageSize = req.body.pageSize;
             const sort = req.body.sort;
@@ -74,8 +74,9 @@ const getService = async (req, res) => {
             if (pageNumber < 1 || pageSize < 1) {
                 return res.status(400)
                 .json({ status: 'Error',
-                     message: 'Page number and page size must be positive integers' ,
-                     data:[]});
+                     message: 'Page number and page size must be positive integers',
+                     data:[]
+                    });
             }
 
             const limit = pageSize;
