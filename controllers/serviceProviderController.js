@@ -59,7 +59,8 @@ const createServiceProvider = async (req, res) => {
             photo: { photo: serviceProvider.photo },
             email: serviceProvider.email,
             rating: serviceProvider.rating,
-            review: serviceProvider.review
+            review: serviceProvider.review,
+            website:serviceProvider.website
         });
 
         await provider.save();
