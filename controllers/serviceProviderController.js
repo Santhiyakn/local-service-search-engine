@@ -152,35 +152,9 @@ const updateServiceProvider = async (req, res) => {
             }
         }
 
-        if (updatedserviceProvider.email) {
-            const isEmailExist = await ServiceProviderModel
-                .find({ email: updatedserviceProvider.email });
+       
 
-            if (isEmailExist.length > 0) {
-                return res.status(400)
-                    .json({
-                        status: 'Error',
-                        message: 'Service provider already exits with the email id',
-                        data:[]
-                    });
-
-            }
-
-        }
-
-        if (updatedserviceProvider.phoneNumber) {
-            const isPhoneNoExist = await ServiceProviderModel
-                .find({ phoneNumber: serviceProvider.phoneNumber });
-            if (isPhoneNoExist.length > 0) {
-                return res.status(400)
-                    .json({
-                        status: 'Error',
-                        message: 'Service provider already exits with the phone number',
-                        data:[]
-                    });
-            }
-        }
-
+       
        if(updatedserviceProvider.locationAvailable)
        {
            const locations =updatedserviceProvider.locationAvailable;
