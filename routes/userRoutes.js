@@ -18,7 +18,7 @@ router.post('/user/update',authenticate,updateUser);
 
 router.delete('/admin/user/delete',adminAuthenticate,deleteUser);        
 
-router.get('/admin/user/get',getUser); 
+router.get('/admin/user/get',adminAuthenticate,getUser); 
 
 router.post('/admin/login',AdminLogin);
 
