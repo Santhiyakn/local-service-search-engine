@@ -242,7 +242,7 @@ const updateServiceProvider = async (req, res) => {
 
 const getServiceProvider = async (req, res) => {
     try {
-        const id = req.body.id;
+        const id = req.query.id;
         if (id) {
             const serviceProvider = await ServiceProviderModel.findById(id);
             if (serviceProvider === null) {
