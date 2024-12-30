@@ -203,13 +203,10 @@ const updateServiceProvider = async (req, res) => {
             updatedserviceProvider.photo = undefined;
         }
 
-        const sanitizedData = Object.fromEntries(
-            Object.entries(updatedserviceProvider).filter(([_, value]) => value !== undefined)
-        );
 
         const updatedData = await ServiceProviderModel.findByIdAndUpdate(
             id,
-            sanitizedData,
+            updatedserviceProvider,
             { new: true, runValidators: true })
 
 
