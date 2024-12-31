@@ -5,8 +5,8 @@ const {createServiceProvider, deleteServiceProvider, updateServiceProvider, getS
 const {adminAuthenticate}= user
 
 const router = express.Router();
-
-router.post('/admin/create/serviceProvider',adminAuthenticate,createServiceProvider);
+/admin/create/serviceProvider
+router.post('',adminAuthenticate,createServiceProvider);
 
 router.delete('/admin/delete/serviceProvider',adminAuthenticate,deleteServiceProvider);
 

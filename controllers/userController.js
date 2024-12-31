@@ -106,7 +106,7 @@ const verifyOtp = async (req, res) => {
         await VierifyUser.save();
 
         return res.status(201).json({
-            status: 'Error',
+            status: 'success',
             messgae: "Email verfied successfully",
             data:[]
         });
