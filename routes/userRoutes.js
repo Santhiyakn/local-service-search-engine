@@ -20,6 +20,8 @@ router.delete('/admin/user/delete',adminAuthenticate,deleteUser);
 
 router.get('/admin/user/get',adminAuthenticate,getUser); 
 
+router.get('/user/get',authenticate,getUser); 
+
 router.post('/admin/login',AdminLogin);
 
 
