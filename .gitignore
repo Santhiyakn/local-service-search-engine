@@ -33,3 +33,11 @@ Thumbs.db
 *.njsproj
 *.sln
 
+# Enforce LF line endings for all text files
+* text=auto
+
+# Explicit LF for specific files
+*.sh text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+
