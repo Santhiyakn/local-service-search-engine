@@ -355,7 +355,7 @@ const updateUser = async (req, res) => {
 const logOut =async (req, res) => {
     try {
         const token = req.header('Authorization');
-        if (!token ) {
+        if (!req.header('Authorization')) {
             return res.status(400)
                 .json({
                     status: 'Error',
@@ -365,6 +365,7 @@ const logOut =async (req, res) => {
         }
         const actualToken = token.split(' ')[1];
         tokenblacklist.add(actualToken);
+
         return res.status(201).json({
             status: 'success',
             message: 'Logged out successfully',
