@@ -357,14 +357,20 @@ const logOut =async (req, res) => {
         
         const token = req.header('Authorization');
         if (!token) {
-            return res.status(400)
-                .json({
-                    status: 'Error',
-                    message: 'No token found',
-                    data:[token]
-                });
+            return res.status(400).json({
+                status: 'Error',
+                message: 'Access denied',
+                data:[token]
+            });
         }
         const actualToken = token.split(' ')[1];
+        if (tokenblacklist.has(actualToken)) {
+            return res.status(402).json({
+                status: 'Error',
+                message: 'Token  invalidated. Please log in again.',
+                data:[]
+            });
+        }
         tokenblacklist.add(actualToken);
 
         return res.status(201).json({
