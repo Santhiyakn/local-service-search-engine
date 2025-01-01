@@ -354,13 +354,14 @@ const updateUser = async (req, res) => {
 
 const logOut =async (req, res) => {
     try {
-        const token = req.header('authorization');
-        if (token==' ') {
+        
+        const token = req.header('Authorization');
+        if (!token) {
             return res.status(400)
                 .json({
                     status: 'Error',
                     message: 'No token found',
-                    data:[]
+                    data:[token]
                 });
         }
         const actualToken = token.split(' ')[1];
