@@ -355,7 +355,7 @@ const updateUser = async (req, res) => {
 const logOut =async (req, res) => {
     try {
         const token = req.header('Authorization');
-        if (!token || !token.startsWith('Bearer ')) {
+        if (!token ) {
             return res.status(400)
                 .json({
                     status: 'Error',
