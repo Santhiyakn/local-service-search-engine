@@ -235,6 +235,7 @@ const getServiceProvider = async (req, res) => {
         else {
             const page = req.headers['pagenumber'];
             const size = req.headers['pagesize'];
+            const sort = req.body.sort;
 
             if(page===undefined && size===undefined)
             {
@@ -259,7 +260,7 @@ const getServiceProvider = async (req, res) => {
             const pageNumber = parseInt(page, 10);
             const pageSize = parseInt(size, 10);
             
-            const sort = req.body.sort;
+            
 
             if (pageNumber < 1 || pageSize < 1) {
                 return res.status(400)
