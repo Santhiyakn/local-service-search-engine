@@ -235,7 +235,21 @@ const getServiceProvider = async (req, res) => {
         else {
             const page = req.headers['pagenumber'];
             const size = req.headers['pagesize'];
-          
+
+            if(page===undefined && size===undefined)
+            {
+                const servicesProviders = await ServiceProviderModel.find({})
+                .sort(sort);
+            return res.status(201)
+                .json({
+                    status: 'success',
+                    message: 'Data retrieved',
+                    data: servicesProviders
+                });
+            }
+    
+
+           
             if (!isNumeric(page) || !isNumeric(size)) {
               return res.status(400).json({
                 error: 'Invalid headers. pageNumber and pageSize must be a number.',
