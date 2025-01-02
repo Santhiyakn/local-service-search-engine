@@ -1,4 +1,4 @@
-import { isNumeric } from 'validator';
+
 import ServiceProviderModel from '../models/serviceProviderModel.js';
 import mongoose from 'mongoose';
 const createServiceProvider = async (req, res) => {
@@ -212,6 +212,10 @@ const updateServiceProvider = async (req, res) => {
     }
 }
 
+function isNumeric(value) {
+    return !isNaN(value) && Number.isFinite(Number(value));
+  }
+
 
 const getServiceProvider = async (req, res) => {
     try {
@@ -249,6 +253,8 @@ const getServiceProvider = async (req, res) => {
                     data: servicesProviders
                 });
             }
+
+            
     
 
            
@@ -296,6 +302,7 @@ const getServiceProvider = async (req, res) => {
 
 
 }
+
 
 const serviceProvider = {
     createServiceProvider,
