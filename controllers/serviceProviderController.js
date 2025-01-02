@@ -237,7 +237,7 @@ const getServiceProvider = async (req, res) => {
             const size = req.headers['pagesize'];
             const sort = req.body.sort;
 
-            if(page===undefined && size===undefined)
+            if(page=='0' && size=='0')
             {
                 const servicesProviders = await ServiceProviderModel.find({})
                 .sort(sort);
