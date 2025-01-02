@@ -1,3 +1,4 @@
+import { isNumeric } from 'validator';
 import ServiceProviderModel from '../models/serviceProviderModel.js';
 import mongoose from 'mongoose';
 const createServiceProvider = async (req, res) => {
