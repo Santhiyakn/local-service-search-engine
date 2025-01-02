@@ -233,8 +233,18 @@ const getServiceProvider = async (req, res) => {
                 });
         }
         else {
-            const pageNumber = req.body.pageNumber;
-            const pageSize = req.body.pageSize;
+            const page = req.headers['pagenumber'];
+            const size = req.headers['pagesize'];
+          
+            if (!isNumeric(page) || !isNumeric(size)) {
+              return res.status(400).json({
+                error: 'Invalid headers. pageNumber and pageSize must be numeric.',
+              });
+            }
+          
+            const pageNumber = parseInt(page, 10);
+            const pageSize = parseInt(size, 10);
+            
             const sort = req.body.sort;
 
             if (pageNumber < 1 || pageSize < 1) {
