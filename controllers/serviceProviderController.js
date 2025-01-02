@@ -238,7 +238,7 @@ const getServiceProvider = async (req, res) => {
           
             if (!isNumeric(page) || !isNumeric(size)) {
               return res.status(400).json({
-                error: 'Invalid headers. pageNumber and pageSize must be numeric.',
+                error: 'Invalid headers. pageNumber and pageSize must be a number.',
               });
             }
           
