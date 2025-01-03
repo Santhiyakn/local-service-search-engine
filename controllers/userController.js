@@ -518,7 +518,7 @@ const getUserName=async(req,res)=>{
             });
         }
         const User = await UserModel.findByIdAndDelete(id);
-        if(!User)
+        if(User== null)
         {
             return res.status(500)
             .json({
