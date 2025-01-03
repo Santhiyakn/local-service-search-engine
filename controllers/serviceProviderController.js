@@ -240,8 +240,8 @@ const getServiceProvider = async (req, res) => {
         else {
             const page = req.headers['pagenumber'];
             const size = req.headers['pagesize'];
-            const sortBy = req.query.sortBy || 'companyName';
-            const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1;
+            const sortBy = req.query.sortBy[0] || 'companyName';
+            const sortOrder = req.query.sortOrder[0] === 'desc' ? -1 : 1;
 
             if(page=='0' && size=='0')
             {
