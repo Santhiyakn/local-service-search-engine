@@ -507,7 +507,7 @@ const deleteUser = async (req, res) => {
 
 const getUserName=async(req,res)=>{
     try{
-        const id=req.query.id;
+        const id = req.query.id;
         if(!id)
         {
             return res.status(500)
