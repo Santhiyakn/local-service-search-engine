@@ -240,13 +240,13 @@ const getServiceProvider = async (req, res) => {
         else {
             const page = req.headers['pagenumber'];
             const size = req.headers['pagesize'];
-            const sortBy = req.query.sortBy[0] || 'companyName';
-            const sortOrder = req.query.sortOrder[0] === 'desc' ? -1 : 1;
+            const sortBy = req.query.sortBy || 'companyName';
+            const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1;
 
             if(page=='0' && size=='0')
             {
                 const servicesProviders = await ServiceProviderModel.find({})
-                .sort({sortBy:sortOrder});
+                .sort({[sortBy]:sortOrder});
             return res.status(201)
                 .json({
                     status: 'success',
@@ -282,7 +282,7 @@ const getServiceProvider = async (req, res) => {
             const servicesProviders = await ServiceProviderModel.find({})
                 .limit(limit)
                 .skip(skip)
-                .sort({sortBy:sortOrder});
+                .sort({[sortBy]:sortOrder});
             return res.status(201)
                 .json({
                     status: 'success',
