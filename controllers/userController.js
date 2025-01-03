@@ -505,6 +505,47 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const getUserName=async(req,res)=>{
+    try{
+        const id=req.query.id;
+        if(!id)
+        {
+            return res.status(500)
+            .json({
+                status: 'Error',
+                message: 'id is required to get the name of the user',
+                data:[]
+            });
+        }
+        const User = await UserModel.findByIdAndDelete(id);
+        if(!User)
+        {
+            return res.status(500)
+            .json({
+                status: 'Error',
+                message: 'user not found',
+                data:[]
+            });
+        }
+        return res.status(202)
+        .json({
+            status: 'success',
+            message: 'user name is found',
+            data:[User.name]
+        });
+
+
+    }
+    catch (error) {
+        return res.status(500)
+            .json({
+                status: 'Error',
+                message: error.message,
+                data:[]
+            });
+    }
+}
+
 
 
 
@@ -521,7 +562,8 @@ const user =
     getUser,
     AdminLogin,
     deleteUser,
-    adminAuthenticate
+    adminAuthenticate,
+    getUserName
 };
 
 
